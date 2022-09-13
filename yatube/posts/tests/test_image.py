@@ -96,7 +96,9 @@ class ImgageViews(TestCase):
         for address in used_templates:
             with self.subTest(address=address):
                 self.authorized_client.get(address)
-                self.assertTrue(Post.objects.filter(image='posts/small.gif').exists())
+                self.assertTrue(Post.objects.filter(
+                    image='posts/small.gif').exists()
+                                )
                 cache.clear()
 
 
@@ -104,4 +106,5 @@ class ImgageViews(TestCase):
 def tearDownClass(cls):
     shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
     super().tearDownClass()
+
 

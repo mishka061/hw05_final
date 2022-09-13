@@ -52,7 +52,8 @@ class PostCommitTest(TestCase):
         self.assertEqual(Post.objects.all().count(), 1)
 
     def test_guest_client_comment(self):
-        """Комментировать посты может только не авторизированный пользователь"""
+        """Комментировать посты может
+        только не авторизированный пользователь"""
         self.guest_client.get(reverse(
             'posts:add_comment',
             kwargs={'post_id': self.post.id}

@@ -8,6 +8,7 @@ from posts.models import Post, Group
 
 User = get_user_model()
 
+
 class PostURLTests(TestCase):
     @classmethod
     def setUpClass(cls):
