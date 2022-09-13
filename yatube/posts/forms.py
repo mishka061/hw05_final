@@ -15,6 +15,7 @@ class PostForm(forms.ModelForm):
             'text': 'Текст подсказки'
         }
 
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
@@ -26,7 +27,6 @@ class CommentForm(forms.ModelForm):
             'text': 'Комментарий к посту'
         }
 
+
 class PostCreateForm:
     pass
-
-

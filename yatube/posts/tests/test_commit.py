@@ -1,11 +1,8 @@
-from tokenize import Comment
-
 from django.test import Client, TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
 from posts.models import Group, Post
-
 
 User = get_user_model()
 
@@ -44,7 +41,7 @@ class PostCommitTest(TestCase):
             kwargs={'post_id': self.post.id}
         ))
         context_comment = response.context['comments']
-        self.assertNotEqual(PostCommitTest,context_comment)
+        self.assertNotEqual(PostCommitTest, context_comment)
         self.assertEqual(response.status_code, 200)
 
     def test_authorized_client_comment(self):
@@ -58,11 +55,14 @@ class PostCommitTest(TestCase):
         """Комментировать посты может только не авторизированный пользователь"""
         self.guest_client.get(reverse(
             'posts:add_comment',
-            kwargs={'post_id': self.post.id}))
+            kwargs={'post_id': self.post.id}
+        ))
         self.assertEqual(Post.objects.all().count(), 1)
 
     def test_post_detail_page_show_correct_context(self):
-       """Проверка правильного контекста функции post_detail"""
-       self.authorized_client.get(
-           reverse('posts:post_detail', kwargs={'post_id': self.post.id}))
-       self.assertEqual(Post.objects.all().count(), 1)
+        """Проверка правильного контекста функции post_detail"""
+        self.authorized_client.get(
+            reverse('posts:post_detail',
+                    kwargs={'post_id': self.post.id}
+                    ))
+        self.assertEqual(Post.objects.all().count(), 1)

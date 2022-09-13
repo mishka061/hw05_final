@@ -46,7 +46,6 @@ class ImgageViews(TestCase):
             image=cls.uploaded
         )
 
-
     def setUp(self):
         """ПРОСТО ПОЛЬЗОВАТЕЛЬ"""
         self.guest_client = Client()
@@ -59,7 +58,6 @@ class ImgageViews(TestCase):
         self.authorized_client.force_login(self.authorized_user)
         cache.clear()
 
-
     def test_image_post_detail(self):
         response = self.authorized_client.get(reverse
                                               ('posts:post_detail',
@@ -68,7 +66,6 @@ class ImgageViews(TestCase):
         self.assertEqual(response.context['post'].image,
                          f'posts/{self.uploaded}')
         cache.clear()
-
 
     def test_create_post_form(self):
         """Валидная форма создает запись в Post с картинкой."""
@@ -83,11 +80,10 @@ class ImgageViews(TestCase):
             data=form_data,
             follow=True
         )
-        self.assertEqual(Post.objects.count(), posts_count , 1)
+        self.assertEqual(Post.objects.count(), posts_count, 1)
         self.assertTrue(
             Post.objects.filter(image='posts/small.gif').exists())
         cache.clear()
-
 
     def test_image_templates(self):
         """Возвращает адреса"""
@@ -104,13 +100,8 @@ class ImgageViews(TestCase):
                 cache.clear()
 
 
-
 @classmethod
 def tearDownClass(cls):
     shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
     super().tearDownClass()
-
-
-
-
 

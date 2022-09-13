@@ -1,4 +1,3 @@
-import tempfile
 from http import HTTPStatus
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
@@ -70,6 +69,7 @@ class PostURLTests(TestCase):
                 response = self.authorized_client.get(address)
                 self.assertTemplateUsed(response, template)
                 cache.clear()
+
 
 class CoreTestClass(TestCase):
     def test_page_not_found_404(self):

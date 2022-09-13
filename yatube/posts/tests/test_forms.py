@@ -1,9 +1,6 @@
 import shutil
-import tempfile
 from http import HTTPStatus
-
 from django.contrib.auth import get_user_model
-from django.conf import settings
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from posts.models import Group, Post
@@ -12,13 +9,11 @@ from posts.tests.test_image import TEMP_MEDIA_ROOT
 User = get_user_model()
 
 
-
 @override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
 class PostCreateForm(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Создаем запись в базе данных для проверки сушествующего slug
         cls.user = User.objects.create_user(username='author')
         cls.group = Group.objects.create(
             title='Тестовая группа',
@@ -37,7 +32,6 @@ class PostCreateForm(TestCase):
         self.guest_client = Client()
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
-
 
     def test_create_post(self):
         """Проверка создания новой записи"""
@@ -83,6 +77,7 @@ class PostCreateForm(TestCase):
         self.assertTrue(
             Post.objects.filter(text='Измененённое сообщение').exists()
         )
+
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()

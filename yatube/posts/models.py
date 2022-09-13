@@ -66,6 +66,7 @@ class Post(models.Model):
     def __str__(self):
         return self.text[:15]
 
+
 class Comment(models.Model):
     text = models.TextField(
         max_length=200,
@@ -89,6 +90,7 @@ class Comment(models.Model):
         verbose_name='Дата публикации'
     )
 
+
 class Follow(models.Model):
     user = models.ForeignKey(
         User,
@@ -102,8 +104,7 @@ class Follow(models.Model):
         related_name='following',
         verbose_name='Пользователь на которого подписываются'
     )
+
     class Meta:
         verbose_name = 'Подписчик'
         verbose_name_plural = 'Подписчики'
-
-

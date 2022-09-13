@@ -78,13 +78,13 @@ def post_detail(request, post_id):
 def post_create(request):
     form = PostForm(
         request.POST or None,
-        files=request.FILES or None,
+        files=request.FILES or None
     )
     context = {
         'form': form
     }
     if request.method == "POST":
-        form = PostForm(request.POST or None,  files=request.FILES or None)
+        form = PostForm(request.POST or None, files=request.FILES or None)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -131,7 +131,9 @@ def add_comment(request, post_id):
 @login_required
 def follow_index(request):
     user = request.user
-    author_following_posts = Post.objects.filter(author__following__user=user).all()
+    author_following_posts = Post.objects.filter(
+        author__following__user=user
+    ).all()
     page_obj = get_page(request, author_following_posts)
     context = {
         'page_obj': page_obj

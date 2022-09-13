@@ -1,12 +1,9 @@
-import tempfile
-
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-
-from yatube import settings
 from ..models import Group, Post
 
 User = get_user_model()
+
 
 class PostModelTest(TestCase):
     @classmethod

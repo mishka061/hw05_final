@@ -179,7 +179,6 @@ class PostViewsTest(TestCase):
         cache.clear()
 
 
-
 class PaginatorViewsTest(TestCase):
     @classmethod
     def setUpClass(cls):
