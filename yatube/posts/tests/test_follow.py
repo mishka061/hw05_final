@@ -40,18 +40,18 @@ class FollowTest(TestCase):
     def test_profile_follow(self):
         """Авторизованный пользователь может подписываться
         на других пользователей """
-        self.authorized_client.get(reverse('posts:profile_follow',
-                                                      kwargs={'username': self.user}))
+        self.authorized_client.get(
+            reverse('posts:profile_follow',
+                    kwargs={'username': self.user}
+                    ))
         self.assertEqual(Follow.objects.all().count(), 1)
-
-
-
-
 
     def test_profile_unfollow(self):
         """Авторизованный пользователь может удалять их из подписок"""
-        response = self.authorized_client.get(reverse('posts:profile_unfollow',
-                                                      kwargs={'username': self.user}))
-
+        response = self.authorized_client.get(
+            reverse('posts:profile_unfollow',
+                    kwargs={'username': self.user}
+                    ))
         self.assertRedirects(response, (f'/profile/{self.user}/'))
+
 
