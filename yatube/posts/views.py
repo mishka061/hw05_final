@@ -6,9 +6,11 @@ from django.views.decorators.cache import cache_page
 from .forms import CommentForm, PostForm
 from .models import Follow, Group, Post, User
 
+PAGINATOR_PAGE = 10
+
 
 def get_page(request, post_list):
-    paginator = Paginator(post_list, 10)
+    paginator = Paginator(post_list, PAGINATOR_PAGE)
     page_number = request.GET.get('page')
     return paginator.get_page(page_number)
 
@@ -25,16 +27,12 @@ def group_posts(request, slug):
     return render(request, template, context)
 
 
-@cache_page(20, key_prefix='index_page')
+@cache_page(60 * 20, key_prefix='index_page')
 def index(request):
     template = 'posts/index.html'
-    title = 'Последние обновления на сайте'
-    text = 'Это главная страница проекта Yatube'
     post_list = Post.objects.all()
     page_obj = get_page(request, post_list)
     context = {
-        'title': title,
-        'text': text,
         'page_obj': page_obj
     }
     return render(request, template, context)
@@ -44,16 +42,14 @@ def profile(request, username):
     template = 'posts/profile.html'
     user = request.user
     author = get_object_or_404(User, username=username)
-    profile_list = Post.objects.filter(author=author)
-    post_count = author.posts.count()
-    page_obj = get_page(request, profile_list)
+    posts = Post.objects.filter(author=author)
+    page_obj = get_page(request, posts)
     following = user.is_authenticated and Follow.objects.filter(
         user=user, author=author
     ).exists()
     context = {
         'author': author,
         'page_obj': page_obj,
-        'post_count': post_count,
         'following': following
     }
     return render(request, template, context)
@@ -64,10 +60,8 @@ def post_detail(request, post_id):
     form = CommentForm(request.POST or None)
     post = get_object_or_404(Post, id=post_id)
     comments = post.comments.all()
-    count_post = Post.objects.filter(author=post.author).count()
     context = {
         'post': post,
-        'count_post': count_post,
         'form': form,
         'comments': comments
     }
@@ -83,7 +77,7 @@ def post_create(request):
     context = {
         'form': form
     }
-    if request.method == "POST":
+    if request.method == 'POST':
         form = PostForm(request.POST or None, files=request.FILES or None)
         if form.is_valid():
             post = form.save(commit=False)
@@ -110,9 +104,6 @@ def post_edit(request, post_id):
     if form.is_valid():
         form.save()
         return redirect('posts:post_detail', post_id=post.id)
-    elif request.method == 'GET':
-        if request.user != post.author:
-            return redirect('posts:post_detail', post_id=post.id)
     return render(request, 'posts/post_create.html', context)
 
 
@@ -147,7 +138,7 @@ def profile_follow(request, username):
     author = User.objects.get(username=username)
     follower = Follow.objects.filter(user=user, author=author)
     if author != user and not follower.exists():
-        Follow.objects.create(
+        Follow.objects.get_or_create(
             user=user,
             author=author
         )

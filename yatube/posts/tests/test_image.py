@@ -45,6 +45,7 @@ class ImgageViews(TestCase):
             pub_date='Дата публикации',
             image=cls.uploaded
         )
+    cache.clear()
 
     def setUp(self):
         """ПРОСТО ПОЛЬЗОВАТЕЛЬ"""
@@ -56,7 +57,7 @@ class ImgageViews(TestCase):
         self.authorized_user = User.objects.create_user(username='Автор')
         self.authorized_client = Client()
         self.authorized_client.force_login(self.authorized_user)
-        cache.clear()
+    cache.clear()
 
     def test_image_post_detail(self):
         response = self.authorized_client.get(reverse
@@ -65,7 +66,7 @@ class ImgageViews(TestCase):
                                                ))
         self.assertEqual(response.context['post'].image,
                          f'posts/{self.uploaded}')
-        cache.clear()
+    cache.clear()
 
     def test_create_post_form(self):
         """Валидная форма создает запись в Post с картинкой."""
@@ -83,7 +84,7 @@ class ImgageViews(TestCase):
         self.assertEqual(Post.objects.count(), posts_count, 1)
         self.assertTrue(
             Post.objects.filter(image='posts/small.gif').exists())
-        cache.clear()
+    cache.clear()
 
     def test_image_templates(self):
         """Возвращает адреса"""
@@ -98,7 +99,7 @@ class ImgageViews(TestCase):
                 self.authorized_client.get(address)
                 self.assertTrue(Post.objects.filter(
                     image='posts/small.gif').exists())
-                cache.clear()
+    cache.clear()
 
 
 @classmethod

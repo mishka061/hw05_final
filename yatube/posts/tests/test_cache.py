@@ -34,7 +34,7 @@ class PostCacheTest(TestCase):
         self.authorized_user = User.objects.create_user(username='НЕ АВТОР')
         self.authorized_client = Client()
         self.authorized_client.force_login(self.authorized_user)
-        cache.clear()
+    cache.clear()
 
     def test_cache_index(self):
         """Проверка хранения и очищения кэша для index."""
@@ -51,4 +51,4 @@ class PostCacheTest(TestCase):
         response_new = self.authorized_client.get(reverse('posts:index'))
         new_post = response_new.content
         self.assertNotEqual(old_posts, new_post)
-        cache.clear()
+    cache.clear()

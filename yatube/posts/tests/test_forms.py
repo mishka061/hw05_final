@@ -1,15 +1,13 @@
 import shutil
 from http import HTTPStatus
 from django.contrib.auth import get_user_model
-from django.test import Client, TestCase, override_settings
+from django.test import Client, TestCase
 from django.urls import reverse
 from posts.models import Group, Post
-from posts.tests.test_image import TEMP_MEDIA_ROOT
 
 User = get_user_model()
 
 
-@override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
 class PostCreateForm(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -77,8 +75,3 @@ class PostCreateForm(TestCase):
         self.assertTrue(
             Post.objects.filter(text='Измененённое сообщение').exists()
         )
-
-    @classmethod
-    def tearDownClass(cls):
-        super().tearDownClass()
-        shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
