@@ -53,5 +53,3 @@ class FollowTest(TestCase):
                     kwargs={'username': self.user}
                     ))
         self.assertRedirects(response, (f'/profile/{self.user}/'))
-
-
