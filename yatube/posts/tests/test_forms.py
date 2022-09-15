@@ -53,6 +53,10 @@ class PostCreateForm(TestCase):
                 group=PostCreateForm.group,
             ).exists()
         )
+        new_post = Post.objects.last()
+        self.assertEqual(new_post.author, self.user)
+        self.assertEqual(new_post.group, self.group)
+
 
     def test_post_edit(self):
         """Проверка страницы редактирования поста"""
@@ -74,3 +78,9 @@ class PostCreateForm(TestCase):
         self.assertTrue(
             Post.objects.filter(text='Измененённое сообщение').exists()
         )
+        old_group_response = self.authorized_client.get(
+            reverse('posts:group_list', args=(self.group.slug,))
+        )
+        self.assertEqual(old_group_response.context['page_obj'].paginator.count, 1)
+
+
