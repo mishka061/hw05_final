@@ -57,7 +57,6 @@ class PostCreateForm(TestCase):
         self.assertEqual(new_post.author, self.user)
         self.assertEqual(new_post.group, self.group)
 
-
     def test_post_edit(self):
         """Проверка страницы редактирования поста"""
         reverse_url = reverse(
@@ -81,6 +80,6 @@ class PostCreateForm(TestCase):
         old_group_response = self.authorized_client.get(
             reverse('posts:group_list', args=(self.group.slug,))
         )
-        self.assertEqual(old_group_response.context['page_obj'].paginator.count, 1)
-
-
+        self.assertEqual(
+            old_group_response.context['page_obj'].paginator.count, 1
+        )
