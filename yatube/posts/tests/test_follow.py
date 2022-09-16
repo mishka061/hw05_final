@@ -2,7 +2,7 @@ from django.test import Client, TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-from posts.models import Group, Post, Follow
+from posts.models import Post, Follow
 
 User = get_user_model()
 
@@ -29,10 +29,10 @@ class FollowersViewsTest(TestCase):
             text='Test_text',
             author=cls.user2,
         )
+
     def test_follower_can_follow(self):
-        """
-        Авторизованный пользователь может подписываться
-        на других пользоваталей.
+        """пользователь может подписываться
+        на других
         """
         self.follower.get(
             reverse('posts:profile_follow', kwargs={
