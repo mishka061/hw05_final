@@ -1,3 +1,5 @@
-# hw05_final
+Проект Социальная сеть Ятубия  
+Авторизированный пользователь может добавлять посты,изменять,удалять.  
+К постам можно писать комментарии
+Запуск проекта:python manage.py runserver  
 
-[![CI](https://github.com/yandex-praktikum/hw05_final/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/yandex-praktikum/hw05_final/actions/workflows/python-app.yml)
