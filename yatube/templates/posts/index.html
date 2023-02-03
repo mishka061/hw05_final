@@ -17,8 +17,11 @@
                         <h1><b>Сайт хорошего настроения</b></h1>
                         <br>
                         <h2>Чем чаще мы улыбаемся, тем счастливее становимся! Японская пословица гласит: "Сильнейший
-                            тот, кто улыбается." 最強は笑顔の人です
+                            тот, кто улыбается."
                         </h2>
+                        <h1>最強の
+                            笑っている人ですか</h1>
+
                     </em>
                 </font>
             </div>
@@ -50,12 +53,12 @@
                 <em>
                     <li>
                         {% if post.group %}
-                        <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы {{ post.group }}
+                        <a href="{% url 'posts:group_list' post.group.slug %}">Все записи группы {{ post.group }}
                         </a>
                         {% endif %}
                     </li>
                     <li>
-                        <a href="{% url 'posts:post_detail' post.id %}">все посты пользователя
+                        <a href="{% url 'posts:post_detail' post.id %}">Все посты пользователя
                             {{post.author.get_full_name|default:post.author.username }}
                         </a>
                     </li>
@@ -67,7 +70,6 @@
         </div>
     </div>
     {% if not forloop.last %}
-    <hr>
     {% endif %}
     {% endfor %}
     {% endcache %}
