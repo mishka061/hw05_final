@@ -11,8 +11,10 @@
 
 Python  
 Django  
-JWT-token
+JWT-token    
 HTML 
+SQL 
+Bootstrap  
    
 ### Инструкция по запуску
 
